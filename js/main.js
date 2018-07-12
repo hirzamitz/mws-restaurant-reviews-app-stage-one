@@ -138,10 +138,44 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  /**
+   *  add source elements to allow picture element to load the image based on viewport size 
+   *  display a figure caption next to the image 
+  **/
+  const figure = document.createElement('figure');
+  figure.className = 'restaurant-figure';
+
+  const picture = document.createElement('picture');
+
+  const imgSrc = DBHelper.imageUrlForRestaurant(restaurant);
+
+  const source1 = document.createElement('source');
+  source1.media = "(min-width: 750px)";
+  source1.srcset = imgSrc.replace(".jpg", "-800_large_1X.jpg");
+  source1.type = "image/jpeg"
+
+  picture.append(source1);
+
+  const source2 = document.createElement('source');
+  source2.media = "(min-width: 500px)";
+  source2.srcset = imgSrc.replace(".jpg", "-600_medium.jpg");
+  source2.type = "image/jpeg"
+
+  picture.append(source2);
+
+  const figCaption = document.createElement('figCaption');
+  figCaption.className = 'restaurant-figCaption';
+  figCaption.innerHTML = restaurant.figCaption;
+
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+  image.src = imgSrc.replace(".jpg", "-400_small.jpg");
+  image.alt = "Photo at the " + restaurant.name + " restaurant";
+
+  picture.append(image);
+  figure.append(picture);
+  figure.append(figCaption);
+  li.append(figure);
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
@@ -155,9 +189,17 @@ createRestaurantHTML = (restaurant) => {
   address.innerHTML = restaurant.address;
   li.append(address);
 
-  const more = document.createElement('a');
-  more.innerHTML = 'View Details';
-  more.href = DBHelper.urlForRestaurant(restaurant);
+  // add hidden labels to the combo boxes to improve accessibility
+  const label = document.createElement('label');
+  label.className = "hidden";
+  label.setAttribute("for", "restaurant" + restaurant.id);
+  label.innerHTML = "View Details of " + restaurant.name + " restaurant";
+  li.append(label);
+  
+  const more = document.createElement('button');
+  more.innerHTML = "View Details"
+  more.id = "restaurant" + restaurant.id;
+  more.setAttribute("onclick", "location.href='" + DBHelper.urlForRestaurant(restaurant) + "'");
   li.append(more)
 
   return li

@@ -55,9 +55,38 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  /**
+   *  add source elements to allow picture element to load the image based on viewport size 
+   *  display a figure caption next to the image 
+  **/
+  const picture = document.getElementById('picture-restaurant-img');
+
+  const imgSrc = DBHelper.imageUrlForRestaurant(restaurant);
+
+  const source1 = document.createElement('source');
+  source1.media = "(min-width: 750px)";
+  source1.srcset = imgSrc.replace(".jpg", "-800_large_1X.jpg");
+  source1.type = "image/jpeg"
+
+  picture.append(source1);
+
+  const source2 = document.createElement('source');
+  source2.media = "(min-width: 500px)";
+  source2.srcset = imgSrc.replace(".jpg", "-600_medium.jpg");
+  source2.type = "image/jpeg"
+
+  picture.append(source2);
+
+  const image = document.createElement('img');
+  image.id = 'restaurant-img';
+  image.src = imgSrc.replace(".jpg", "-400_small.jpg");
+  image.alt = "Photo at the " + restaurant.name + " restaurant";
+
+  picture.append(image);
+
+  const figCaption = document.getElementById('restaurant-figCaption');
+  figCaption.className = 'restaurant-figCaption';
+  figCaption.innerHTML = restaurant.figCaption;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -83,7 +112,8 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     row.appendChild(day);
 
     const time = document.createElement('td');
-    time.innerHTML = operatingHours[key];
+    // replace comma with a break to display hours in multiple lines
+    time.innerHTML = operatingHours[key].replace(",", "<br/>");
     row.appendChild(time);
 
     hours.appendChild(row);
@@ -126,7 +156,15 @@ createReviewHTML = (review) => {
   li.appendChild(date);
 
   const rating = document.createElement('p');
-  rating.innerHTML = `Rating: ${review.rating}`;
+
+  rating.innerHTML = 'Rating: '
+  for (i = 0; i < review.rating; i++){
+    rating.innerHTML = rating.innerHTML + '&#x2605';
+  }
+  for (i = review.rating; i < 5; i++){
+    rating.innerHTML = rating.innerHTML + '&#x2606;';
+  }
+  /*rating.innerHTML = `Rating: ${review.rating}`;*/
   li.appendChild(rating);
 
   const comments = document.createElement('p');
