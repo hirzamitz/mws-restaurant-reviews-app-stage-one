@@ -24,5 +24,23 @@ In a terminal, check the version of Python you have: `python -V`. If you have Py
 
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
 
+## Project Submission Summary: Stage 1
 
+The following changes were completed to satisfy the requirements for Stage 1: 
+1. Converted the Restaurant Reviews App to use responsive design.
+    - [x] All content is responsive and displays on a range of display sizes.
+    - [x] Content should make use of available screen real estate and should display correctly at all screen sizes.
+    - [x] An image's associated title and text renders next to the image in all viewport sizes.
+    - [x] Images in the site are sized appropriate to the viewport and do not crowd or overlap other elements in the browser, regardless of viewport size.
+    - [x] On the main page, restaurants and images are displayed in all viewports. The detail page includes a map, hours and reviews in all viewports.
+2. Implemented accessibility features.
+    - [x] All content-related images include appropriate alternate text that clearly describes the content of the image.
+    - [x] Focus is appropriately managed allowing users to noticeably tab through each of the important elements of the page. Modal or interstitial windows appropriately lock focus.
+    - [x] Elements on the page use the appropriate semantic elements. For those elements in which a semantic element is not available, appropriate ARIA roles are defined.
+3. Added a ServiceWorker script to cache requests to all of the site’s assets so that any page that has been visited by a user will be accessible when the user is offline. Only caching was implemented, no other ServiceWorker features.
+    - [x] When available in the browser, the site uses a service worker to cache responses to requests for site assets. Visited pages are rendered when there is no network access.
 
+### Troubleshooting Tips
+
+* If the restaurant data is not being displayed after starting up the client server using "python3 -m http.server <port>", make sure that the port in js/dbhelper.js matches the server port
+    
