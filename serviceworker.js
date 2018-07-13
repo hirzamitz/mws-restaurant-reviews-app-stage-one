@@ -36,7 +36,7 @@ self.addEventListener('install', function(event) {
         'img/7-800_large_1X.jpg',
         'img/8-800_large_1X.jpg',
         'img/9-800_large_1X.jpg',
-        'img/10-800_large_1X.jpg'
+        'img/10-800_large_1X.jpg',
         ]);
       // The items below are part of the return statement for the promise created by caches.open. Since the service worker
       // will not install until all these items are in cache, we try to keep them to a minimum
@@ -48,7 +48,9 @@ self.addEventListener('install', function(event) {
         'js/main.js',
         'js/restaurant_info.js',
         'css/styles.css',
-        'data/restaurants.json'
+        'data/restaurants.json',
+        'img/icons/Icon.svg',
+        'img/icons/Icon-512.png',
       ]);
     })
   );
